@@ -1,0 +1,199 @@
+@font-face {
+  font-family: 'iconosCatastro';
+  src: url("../fonts/iconosCatastro.eot?iqi1qz");
+  src: url("../fonts/iconosCatastro.eot?#iefixiqi1qz") format('embedded-opentype'), url("../fonts/iconosCatastro.woff?iqi1qz") format('woff'), url("../fonts/iconosCatastro.ttf?iqi1qz") format('truetype'), url("../fonts/iconosCatastro.svg?iqi1qz#iconosCatastro") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'banco';
+  src: url("../fonts/banco.eot?iqi1qz");
+  src: url("../fonts/banco.eot?#iefixiqi1qz") format('embedded-opentype'), url("../fonts/banco.woff?iqi1qz") format('woff'), url("../fonts/banco.ttf?iqi1qz") format('truetype'), url("../fonts/banco.svg?iqi1qz#iconosCatastro") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: 'banco';
+  speak: none;
+  vertical-align: middle;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+/* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-flecha-izq:before {
+  content: "\e608";
+}
+.icon-flecha:before {
+  content: "\e601";
+}
+.icon-acepta:before {
+  content: "\e602";
+}
+.icon-cerrar:before {
+  content: "\e603";
+}
+.icon-estadistica:before {
+  content: "\e605";
+}
+.icon-transfe:before {
+  content: "\e606";
+}
+.icon-estadistica:before {
+  content: "\e607";
+}
+.icon-seguridad:before {
+  content: "\e604";
+}
+body {
+  background: #fff;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+.header-cabecera {
+  background: #004771;
+  height: 40px;
+  top: 0%;
+  position: relative;
+  vertical-align: middle;
+  margin-top: -8px;
+}
+.header-cabecera .atras {
+  position: absolute;
+  top: 0.5em;
+  left: 10px;
+  vertical-align: middle;
+}
+.header-cabecera .atras .icon-flecha-izq {
+  color: #fff;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.header-cabecera .atras .icon-flecha-izq:hover {
+  text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+.header-cabecera .titulo .header-titulo {
+  background: #004771;
+  color: #fff;
+  margin-top: 0px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-box-shadow: inset 0 20px 20px -20px #fff;
+  -moz-box-shadow: inset 0 20px 20px -20px #fff;
+  box-shadow: inset 0 20px 20px -23px #fff;
+}
+.header-cabecera .botonera {
+  position: absolute;
+  top: 0.5em;
+  vertical-align: middle;
+}
+.header-cabecera .botonera #btn-cerrar {
+  color: #fff;
+  font-size: 2.3em;
+  position: relative;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.header-cabecera .botonera #btn-cerrar:hover {
+  color: color_fondo_rojo2;
+  text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+.header-cabecera .regresar {
+  position: absolute;
+  top: 0.5em;
+  left: 10px;
+  vertical-align: middle;
+}
+.header-cabecera .regresar #btn-regresar {
+  color: #fff;
+  font-size: 2.3em;
+  position: relative;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.header-cabecera .regresar #btn-regresar:hover {
+  color: color_fondo_rojo2;
+  text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+.cabecera-amarilla {
+  background: #ffcc16;
+  position: relative;
+  vertical-align: middle;
+  margin-top: 0px;
+}
+.cabecera-amarilla .header-titulo {
+  color: #fff;
+  margin-top: 0px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-box-shadow: inset 0 20px 20px -20px #fff;
+  -moz-box-shadow: inset 0 20px 20px -20px #fff;
+  box-shadow: inset 0 20px 20px -20px #fff;
+}
+.lista-banco {
+  background-color: #fff;
+  width: 100%;
+  margin-left: -21px;
+}
+.lista-banco ul {
+  list-style: none;
+}
+.lista-banco ul li {
+  color: fondo;
+  list-style: none;
+  text-align: left;
+  border-bottom: 0.1em solid #c0c0c0;
+  padding-bottom: 1%;
+  padding-top: 1%;
+}
+.imagen {
+  position: absolute;
+}
+.menu {
+  padding-left: 20px;
+}
+.menubajo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.botones {
+  height: 100%;
+  list-style-type: none;
+  text-align: center;
+  background-color: rgba(0,20,64,0.9);
+}
+.botones ul {
+  list-style-type: center;
+  padding: 0;
+  overflow: hidden;
+}
+.botones ul li {
+  float: center;
+  display: inline-block;
+}
+.botones ul li a {
+  margin: 0px;
+  text-decoration: none;
+  width: 60px;
+  padding: 5%;
+}
+.botones ul li:hover {
+  background-color: rgba(255,0,0,0.3);
+}
+@media screen {
+  body div .footer {
+    position: fixed;
+  }
+}
