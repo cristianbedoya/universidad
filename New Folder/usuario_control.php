@@ -9,11 +9,18 @@ class usuario_control extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         //$this->load->library('session');
-        $this->load->view('login');
+        
+        //$this->load->view('login');
+
 	}
 
 	public function index()
 	{
+	$this->load->model('usuario_M');
+    $data['tec']= $this->usuario_M->perfil();
+    //echo "<pre>";print_r($data['room_type']);echo"</pre>";
+    $this->load->view('login', $data);
+
 	}
 
 	public function validar()
@@ -53,14 +60,29 @@ class usuario_control extends CI_Controller {
 		'telefono' => $_POST['telefono'],
 		'direccion' => $_POST['direccion'],
 		'correo' => $_POST['correo'],
-		'usuario' => $_POST['usuario'],
-		'pass' => $_POST['pass']);
+		'estado'=> 'activo');
 
 	if (!isset($datos)) {
 			$this->load->view('login');
 	} else {
 				//echo var_dump($datos);
-			$respuesta=$this->usuario_M->insert($datos);
+			$res=$this->usuario_M->ValidarNuevoUsuario($_POST['usuario'],$_POST['correo'],$_POST['cedula']);
+			if ($res) {
+			
+			
+			
+			$respuesta=$this->usuario_M->insertardatos($datos);
+
+			if ($respuesta>0) {
+				$datosuser = array('cod_usuario'=> $respuesta,
+									'correo' => $_POST['correo'],
+									'usuario' => $_POST['usuario'],
+									'pass' => $_POST['pass']);
+			$respuesta=$this->usuario_M->insertaruser($datosuser);
+
+			}
+
+
 
 			$this->load->view('bien');	
 			if ($respuesta) {
@@ -68,7 +90,11 @@ class usuario_control extends CI_Controller {
 			} else {
 			echo "NO SE Encontraron<br><br><a href=''>Volver</a>";		# code...
 			}
-
+			} 
+			else
+			{
+			echo "ya existe";
+			}
 	}
 	
 
@@ -96,6 +122,73 @@ class usuario_control extends CI_Controller {
 		}       
 		# code...
 	}
+	public function eliminarlogico()
+	{
+		if(!isset($_POST['usuarioid']))
+		{		
+			$this->load->view('login');		
+		}
+		else
+		{
+			$datos=array('estado'=> 'inactivo');
+			$where = array('cod_usuario' => $_POST['usuarioid']);
+			$respuesta=$this->usuario_M->updateDatos($datos,$where);
+			if ($respuesta) {
+				echo "Validacion Ok<br><br><a href=''>Volver</a>";		# code...
+				} else {
+				echo "NO SE Encontraron<br><br><a href=''>Volver</a>";		# code...
+				}	
+		}       
+		# code...
+	}
+
+	public function actualizarDatosU()
+	{
+		$datos=array('cedula' => $_POST['cedula'],
+						'nombre1' => $_POST['nombre1'],
+						'nombre2' => $_POST['nombre2'],
+						'apellido1' => $_POST['apellido1'],
+						'apellido2' => $_POST['apellido2'],
+						'telefono' => $_POST['telefono'],
+						'direccion' => $_POST['direccion'],
+						'correo' => $_POST['correo'],
+						'estado'=> $_POST['estado']);
+		$where = array('cod_usuario' => $_POST['cod_usuario']);
+		$respuesta=$this->usuario_M->updateDatos($datos,$where);
+		if ($respuesta) {
+			echo "Validacion Ok<br><br><a href=''>Volver</a>";		# code...
+			} else {
+			echo "NO SE Encontraron<br><br><a href=''>Volver</a>";		# code...
+			}
+	}
+
+	public function actualizarU()
+	{
+
+		$datosuser = array(		'usuario' => $_POST['user'],
+								'pass' => $_POST['pass'],
+								'cod_perfil' => $_POST['perfil']);
+
+		$respuesta=$this->usuario_M->updateLogin($datosuser,$_POST['cod_usuario']);
+
+		if ($respuesta) {
+			echo "Validacion Ok<br><br><a href=''>Volver</a>";		# code...
+			} else {
+			echo "NO SE Encontraron<br><br><a href=''>Volver</a>";		# code...
+			}
+	}
+	public function perfil()
+	{
+
+		$respuesta=$this->usuario_M->perfil();
+
+		if ($respuesta) {
+			echo form_dropdown('perfil', $respuesta, 'Tecnico');
+			} else {
+			echo "NO SE Encontraron<br><br><a href=''>Volver</a>";		# code...
+			}
+	}
+
 
 
 	

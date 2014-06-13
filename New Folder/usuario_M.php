@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class usuario_M extends CI_Model 	
+class usuario_M extends CI_Model    
 {
 
-	public $variable;
+    public $variable;
 
-	public function __construct()
-	{
-		parent::__construct();
-		 $this->load->database();
-	
-	}
+    public function __construct()
+    {
+        parent::__construct();
+         $this->load->database();
+    
+    }
     /**
      * @name string TABLE_NAME Holds the name of the table in use by this model
      */
@@ -45,7 +45,7 @@ class usuario_M extends CI_Model
         }
         $result = $this->db->get()->result();
         if ($result) {
-            if ($where !== NULL) {
+            if ($where  !==NULL) {
                 return array_shift($result);
             } else {
                 return $result;
@@ -61,27 +61,40 @@ class usuario_M extends CI_Model
      * @param Array $data Associative array with field_name=>value pattern to be inserted into database
      * @return mixed Inserted row ID, or false if error occured
      */
-    public function insert(Array $data) {
-  		$datauser
-        if ($this->db->insert(self::TABLA_USUARIOD, $data)) {
-          $res=$this->db->insert_id();
-        	if ($res)
-        	{
-        		
-        		   $datauser= array('cod_perfil' => '1',
-        					'correo' => $data['correo'],
-        					'usuario' => $data['usuario'],
-        					'Pass' => $data['pass']);
-        		 echo var_dump($datauser);
-        		if ($this->db->insert(self::TABLE_NAME, $datauser)) {
-        			$res=$this->db->insert_id();
-        		}         		
-        	} 
-        	
-        } else {
+    public function insertardatos(Array $data) {
+
+        if ($this->db->insert(self::TABLA_USUARIOD, $data)) 
+        {
+          return $this->db->insert_id();
+        }else 
+        {
             return false;
         }
     }
+
+    
+   public function insertaruser(Array $data) {
+
+        if ($this->db->insert(self::TABLE_NAME, $data)) 
+        {
+          return true;
+        }else 
+        {
+            return false;
+        }
+    }
+
+    public function perfil()
+    {
+       $this->db->select('nombre');
+       $query=$this->db->get('tblperfil');
+       if ($query<>'') {
+            return $query->result_array();
+       } else {
+            return FALSE;
+       }
+    }
+
 
     /**
      * Updates selected record in the database
@@ -90,11 +103,21 @@ class usuario_M extends CI_Model
      * @param Array $where Optional. Associative array field_name=>value, for where condition. If specified, $id is not used
      * @return int Number of affected rows by the update query
      */
-    public function update(Array $data, $where = array()) {
+    public function updateDatos(Array $data, $where = array()) {
             if (!is_array($where)) {
                 $where = array(self::PRI_INDEX => $where);
             }
-        $this->db->update(self::TABLE_NAME, $data, $where);
+            $this->db->update(self::TABLA_USUARIOD, $data, $where);
+        
+        return $this->db->affected_rows();
+    }
+
+    public function updateLogin(Array $data, $where = array()) {
+            if (!is_array($where)) {
+                $where = array(self::PRI_INDEX => $where);
+            }
+            $this->db->update(self::TABLE_NAME, $data, $where);
+        
         return $this->db->affected_rows();
     }
 
@@ -113,18 +136,46 @@ class usuario_M extends CI_Model
     }
 
 
-	public function ValidarUsuario($user,$password){			//	Consulta Mysql para buscar en la tabla Usuario aquellos usuarios que coincidan con el mail y password ingresados en pantalla de login
-		$query = $this->db->where('usuario',$user);	//	La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
-		$query = $this->db->where('Pass',$password);
-		$query = $this->db->get('tblusuario');
-		return $query->row(); 	//	Devolvemos al controlador la fila que coincide con la búsqueda. (FALSE en caso que no existir coincidencias)
-	}
+    public function ValidarUsuario($user,$password){            //  Consulta Mysql para buscar en la tabla Usuario aquellos usuarios que coincidan con el mail y password ingresados en pantalla de login
+       // $query = $this->db->where('usuario',$user); //  La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
+       // $query = $this->db->where('Pass',$password);
+       // $query = $this->db->get('tblusuario');
+                //  Devolvemos al controlador la fila que coincide con la búsqueda. (FALSE en caso que no existir coincidencias)
+            $this->db->select('*');
+            $this->db->from('tblusuario');
+            $this->db->join('tblusuario_datos', 'tblusuario.cod_usuario = tblusuario_datos.cod_usuario');
+            $this->db->where('tblusuario.usuario',$user); //  La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
+            $this->db->where('tblusuario.Pass',$password);
+            $this->db->where('tblusuario_datos.estado','activo');
+            $query = $this->db->get();
+             return $query->row();  
+    }
 
-	public function ValidarNuevoU($user,$correo){			//	Consulta Mysql para buscar en la tabla Usuario aquellos usuarios que coincidan con el mail y password ingresados en pantalla de login
-		$query = $this->db->where('usuario',$user);	//	La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
-		$query = $this->db->where('correo',$correo);
-		$query = $this->db->where('',$correo);
-		$query = $this->db->get(TABLA_USUARIOD,'');
-		return $query->row(); 	//	Devolvemos al controlador la fila que coincide con la búsqueda. (FALSE en caso que no existir coincidencias)
-	}
+
+
+    public function ValidarNuevoUsuario($user,$correo,$cedula)
+    {         //  Consulta Mysql para buscar en la tabla Usuario aquellos usuarios que coincidan con el mail y password ingresados en pantalla de login
+        $query = $this->db->where('usuario',$user); //  La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
+        $query = $this->db->where('correo',$correo);
+        $query = $this->db->get(self::TABLE_NAME);
+        if ($query<>'') 
+        {
+            $res=$this->db->where('cedula',$cedula); //  La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
+            $res = $this->db->get(self::TABLA_USUARIOD);
+
+            if($res<>'')
+            {
+                return true;  
+            }
+            else
+            {
+                return FALSE;
+            }
+            
+       } else {
+            return FALSE;
+       }
+    //  return $query->row();   //  Devolvemos al controlador la fila que coincide con la búsqueda. (FALSE en caso que no existir coincidencias)
+    }
+
 }
