@@ -1,0 +1,98 @@
+  <!--<?php //echo  getNombre() ?> -->
+<script type="text/javascript" src="<?php echo base_url('extens/js/jquery.min.js');?>"></script>
+<script language="JavaScript">
+      $(document).ready(function(){
+      $("#formulario").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+          url: $(this).attr("action"),
+          type: $(this).attr("method"),
+          data: $(this).serialize(),
+          success: function(data){
+            muestra_oculta("respuesta");
+            $("#respuesta").html(data);
+            
+            console.log(data);
+          }
+        });
+      });
+    });
+       function muestra_oculta(id) {
+                if (document.getElementById) { //se obtiene el id
+                    var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+                    el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+                }
+            }
+            window.onload = function() {/*hace que se cargue la función lo que predetermina que div estará oculto hasta llamar a la función nuevamente*/
+        //muestra_oculta('datos');/* "contenido_a_mostrar" es el nombre que le dimos al DIV */
+            muestra_oculta('respuesta');
+            }
+</script>
+</head>
+<body>
+<div class="main">
+  <div class="menu_nav">
+    <div class="menu_nav_resize">
+      <ul>
+        </ul>
+    </div>
+    <div class="clr"></div>
+  </div>
+  <div class="header">
+    <div class="header_resize">
+      <div class="logo">
+        <h1><a href="index.html">Bienvenido | Infoacudiente</a></h1>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="content_resize">
+      <div class="mainbar">
+        <div class="article">
+          <h2><span>Infoacudientes</span></h2>
+          <p>El fin del sistema de información "Infoacudientes" es manejar de forma automatizada algunas tareas que tienen que ver con la gestión académica y disciplinaria de los estudiantes, ofrecer a los acudientes de los estudiantes la posibilidad de reservar una cita con alguno de los docentes que tengan que ver con el proceso académico del alumno. </p>
+          <img src="<?php echo base_url('extens/images/img1.jpg');?>" width="287" height="97" alt="" class="fl" /> <img src="<?php echo base_url('extens/images/img2.jpg');?>" width="287" height="97" alt="" />
+        </div>
+        <div class="article">
+           <br /> 
+          <p>Además, ofrecer la posibilidad de registrar las notas definitivas del periodo por área, con el fin de establecer las estrategias de apoyo y su seguimiento para aquellos estudiantes que hayan perdido una asignatura y deban recuperar logros. </p>
+          <img src="<?php echo base_url('extens/images/img3.jpg');?>" width="287" height="97" alt="" class="fl" /> <img src="<?php echo base_url('extens/images/img4.jpg');?>" width="287" height="97" alt="" />
+          <p><a href="#">Infoacudiente</a> |  Octubre 5, 2013</p>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="searchform">
+  <h2 class="star" align="center"><span>Iniciar Sesion</span></h2>
+  <div class="login"  align="center">
+
+
+  
+<form id="formulario" action="<?php echo base_url("home/login2");?>" method="post">
+<table>
+<tr><td>Usuario</td><td>
+</td><td><input id="username" name="username" class="text" required /></td></tr>
+
+<tr><td>Contraseña</td><td>:</td><td><input id="password" name="password" type="password"class="text" required /></td></tr>
+</table>
+<input class="boton" type="submit" value="enviar">
+</form>  
+<div id="respuesta" name="respuesta" class="enviado">
+</div>
+
+  </div>
+         
+      
+      <div class="clr"></div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <div class="footer_resize">
+      
+      <ul class="fmenu">
+        <li class="active">
+      </ul>
+      <div class="clr"></div>
+    </div>
+  </div>
+</div>
